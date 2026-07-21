@@ -22,18 +22,18 @@
         </arguments>
     </type>
     <type name="Kunal\Mod1\Logger\Logger">
-    <arguments>
-        <argument name="name" xsi:type="string">mod1</argument>
+        <arguments>
+            <argument name="name" xsi:type="string">mod1</argument>
 
-        <argument name="handlers" xsi:type="array">
-            <item name="system" xsi:type="object">
-                Kunal\Mod1\Logger\Handler
-            </item>
-        </argument>
-    </arguments>
-</type>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">
+                    Kunal\Mod1\Logger\Handler
+                </item>
+            </argument>
+        </arguments>
+    </type>
 
-<type name="Magento\Catalog\Model\Product">
+    <type name="Magento\Catalog\Model\Product">
         <plugin
             name="product_sale_plugin"
             type="Kunal\Mod1\Plugin\ProductPlugin"/>
