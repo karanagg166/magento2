@@ -2,19 +2,20 @@
 
 namespace Kunal\Mod1\Controller\Index;
 
-use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+
 use Magento\Framework\Controller\Result\RedirectFactory;
 
-class Hello implements HttpGetActionInterface
+class Hello extends Action
 {
-    public function __construct(
-        private RedirectFactory $redirectFactory
-    ) {
+    
+    public function __construct(Context $context)
+    {
+        parent::__construct($context);
     }
-
     public function execute()
     {
-        $redirect = $this->redirectFactory->create();
-        return $redirect->setPath('contact');
+        $this->_redirect('lenovo-loq.html');
     }
 }
