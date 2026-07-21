@@ -60,4 +60,10 @@
             type="Kunal\Mod1\Plugin\BreadcrumbsPlugin"/>
     </type>
 
+    <type name="Magento\Catalog\Block\Product\View\Description">
+        <plugin 
+            name="set_description"
+            type="Kunal\Mod1\Plugin\DescriptionPlugin"/>
+    </type>
+
 </config>
