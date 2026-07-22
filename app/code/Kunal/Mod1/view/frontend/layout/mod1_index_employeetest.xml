@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <body>
+        <referenceContainer name="content">
+
+            <block
+                class="Kunal\Mod1\Block\Save"
+                name="employee.form"
+                template="Kunal_Mod1::save.phtml"/>
+
+            <block
+                class="Kunal\Mod1\Block\Table"
+                name="employee.table"
+                template="Kunal_Mod1::table.phtml"/>
+
+        </referenceContainer>
+    </body>
+
+</page>
