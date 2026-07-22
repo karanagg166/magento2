@@ -18,6 +18,28 @@ class Table extends Template
 
     public function getEmployees()
     {
-        return $this->collectionFactory->create();
+        $sort = $this->getRequest()
+            ->getParam('sort');
+
+        $direction = $this->getRequest()
+            ->getParam('dir', 'ASC');
+
+        $allowed = [
+            'employee_id',
+            'first_name',
+            'last_name',
+            'email_id'
+        ];
+
+        if (!in_array($sort, $allowed)) {
+            $sort = 'employee_id';
+        }
+
+        return $this->collectionFactory
+            ->create()
+            ->setOrder(
+                $sort,
+                $direction
+            );
     }
 }

@@ -9,7 +9,7 @@ class Employee extends AbstractDb
     {
         $this->_init(
             'employee_table',
-            'employee_id'
+            'id'
         );
     }
 }

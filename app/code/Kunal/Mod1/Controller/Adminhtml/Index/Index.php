@@ -18,4 +18,5 @@ class Index extends Action
 
         echo "Welcome Admin";
     }
+    
 }

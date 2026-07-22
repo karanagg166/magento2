@@ -1,35 +1,52 @@
-<?php
-$employees = $block->getEmployees();
-?>
+<?php $employees = $block->getEmployees(); ?>
 
-<table>
+<table border="1" cellpadding="8">
 
-<tr>
+    <tr>
+        <th>Employee ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Delete</th>
+    </tr>
 
-<th>ID</th>
+    <?php foreach ($employees as $employee): ?>
+        <tr>
 
-<th>First Name</th>
+            <td><?= $block->escapeHtml($employee->getEmployeeId()) ?></td>
 
-<th>Last Name</th>
+            <td><?= $block->escapeHtml($employee->getFirstName()) ?></td>
 
-<th>Email</th>
+            <td><?= $block->escapeHtml($employee->getLastName()) ?></td>
 
-</tr>
+            <td><?= $block->escapeHtml($employee->getEmailId()) ?></td>
 
-<?php foreach ($employees as $employee): ?>
+            <td><?= $block->escapeHtml($employee->getAddress()) ?></td>
 
-<tr>
+            <td><?= $block->escapeHtml($employee->getPhoneNumber()) ?></td>
 
-<td><?= $employee->getEmployeeId() ?></td>
+            <td>
+               <form method="post"
+                    action="<?= $block->getUrl('mod1/index/employeetest') ?>">
 
-<td><?= $employee->getFirstName() ?></td>
+                    <?= $block->getBlockHtml('formkey') ?>
 
-<td><?= $employee->getLastName() ?></td>
+                    <input
+                        type="hidden"
+                        name="delete_id"
+                        value="<?= $employee->getId() ?>">
 
-<td><?= $employee->getEmailId() ?></td>
+                    <button type="submit">
+                        Delete
+                    </button>
 
-</tr>
+                </form>
+            </td>
 
-<?php endforeach; ?>
+        </tr>
+
+    <?php endforeach; ?>
 
 </table>
