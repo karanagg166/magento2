@@ -1,0 +1,51 @@
+<!--@subject Low Stock Alert: {{var product_name}} (SKU: {{var product_sku}}) @-->
+<!--@vars {
+"var product_name":"Product Name",
+"var product_sku":"Product SKU",
+"var product_id":"Product ID",
+"var qty":"Current Quantity",
+"var threshold":"Low Stock Threshold",
+"var store_name":"Store Name",
+"var recipient_name":"Recipient Name"
+} @-->
+<!-- No header/footer directives: design/email/{header,footer}_template are declared
+     area="frontend" in Magento_Email, so they cannot resolve from this adminhtml template. -->
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td>
+            <h1>Low Inventory Alert</h1>
+            <p>Hello {{var recipient_name}},</p>
+            <p>
+                A product on <strong>{{var store_name}}</strong> has dropped below the
+                configured low-stock threshold and needs your attention.
+            </p>
+
+            <table cellpadding="6" cellspacing="0" border="1"
+                   style="border-collapse:collapse; margin:16px 0;">
+                <tr>
+                    <td><strong>Product</strong></td>
+                    <td>{{var product_name}}</td>
+                </tr>
+                <tr>
+                    <td><strong>SKU</strong></td>
+                    <td>{{var product_sku}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Product ID</strong></td>
+                    <td>{{var product_id}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Current Quantity</strong></td>
+                    <td>{{var qty}}</td>
+                </tr>
+                <tr>
+                    <td><strong>Threshold</strong></td>
+                    <td>{{var threshold}}</td>
+                </tr>
+            </table>
+
+            <p>Please reorder or restock this item to avoid running out.</p>
+        </td>
+    </tr>
+</table>

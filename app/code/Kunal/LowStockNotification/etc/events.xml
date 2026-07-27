@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <!-- Trigger: watch every stock save and fire our custom event when qty drops below threshold -->
+    <event name="cataloginventory_stock_item_save_after">
+        <observer name="kunal_lowstock_check"
+                  instance="Kunal\LowStockNotification\Observer\StockItemSaveObserver"/>
+    </event>
+
+    <!-- Trigger: order placement. MSI records checkout as a reservation and never saves
+         the stock item, so the event above never fires during checkout. This one is
+         dispatched by QuoteManagement right after OrderManagementInterface::place(),
+         i.e. after MSI has appended the reservation. Covers frontend and admin orders. -->
+    <event name="sales_model_service_quote_submit_success">
+        <observer name="kunal_lowstock_check_on_order"
+                  instance="Kunal\LowStockNotification\Observer\StockItemSaveObserver"/>
+    </event>
+
+    <!-- Custom event: dispatched by StockItemSaveObserver, handled by the notifier -->
+    <event name="kunal_product_qty_below_threshold">
+        <observer name="kunal_lowstock_notify"
+                  instance="Kunal\LowStockNotification\Observer\LowInventoryNotificationObserver"/>
+    </event>
+</config>
