@@ -1,0 +1,46 @@
+type Query {
+    employees(
+        filter: EmployeeFilterInput @doc(description: "Filter criteria for employee records")
+    ): EmployeeSearchResults @resolver(class: "Karan\\EmployeeApi\\Model\\Resolver\\Employees") @doc(description: "Fetch employee records from employee_table with column-level filtering")
+}
+
+type Mutation {
+    createEmployee(
+        input: EmployeeInput! @doc(description: "Employee creation input data")
+    ): Employee @resolver(class: "Karan\\EmployeeApi\\Model\\Resolver\\CreateEmployee") @doc(description: "Create a new employee record")
+
+    updateEmployee(
+        id: Int! @doc(description: "Employee ID to update")
+        input: EmployeeInput! @doc(description: "Employee update input data")
+    ): Employee @resolver(class: "Karan\\EmployeeApi\\Model\\Resolver\\UpdateEmployee") @doc(description: "Update an existing employee record")
+}
+
+type Employee {
+    entity_id: Int @doc(description: "Employee Entity ID")
+    name: String @doc(description: "Employee Full Name")
+    email: String @doc(description: "Employee Email Address")
+    department: String @doc(description: "Employee Department")
+    position: String @doc(description: "Employee Position")
+    salary: Float @doc(description: "Employee Salary")
+}
+
+type EmployeeSearchResults {
+    items: [Employee] @doc(description: "List of employees matching filter criteria")
+    total_count: Int @doc(description: "Total number of employee records")
+}
+
+input EmployeeFilterInput {
+    entity_id: FilterEqualTypeInput @doc(description: "Filter by Entity ID")
+    name: FilterMatchTypeInput @doc(description: "Filter by Name")
+    email: FilterMatchTypeInput @doc(description: "Filter by Email")
+    department: FilterMatchTypeInput @doc(description: "Filter by Department")
+    position: FilterMatchTypeInput @doc(description: "Filter by Position")
+}
+
+input EmployeeInput {
+    name: String! @doc(description: "Employee Name")
+    email: String! @doc(description: "Employee Email")
+    department: String @doc(description: "Employee Department")
+    position: String @doc(description: "Employee Position")
+    salary: Float @doc(description: "Employee Salary")
+}

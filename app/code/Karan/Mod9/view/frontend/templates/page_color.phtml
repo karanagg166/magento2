@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Karan. All rights reserved.
+ *
+ * @var \Karan\Mod9\Block\PageColor $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+$pageColor = $block->getPageColor();
+?>
+<?php if (!empty($pageColor)): ?>
+    <style>
+        body,
+        .page-wrapper,
+        .page-header,
+        .page-footer,
+        .nav-sections,
+        .nav-sections .navigation,
+        .breadcrumbs,
+        .page-main {
+            background-color: <?= $escaper->escapeHtml($pageColor) ?> !important;
+        }
+    </style>
+<?php endif; ?>

@@ -1,0 +1,57 @@
+<?php $employees = $block->getEmployees(); ?>
+
+<?php
+$currentDir = $block->getRequest()->getParam('dir', 'ASC');
+$nextDir = ($currentDir === 'ASC') ? 'DESC' : 'ASC';
+?>
+<table border="1" cellpadding="8">
+
+    <tr>
+        <th><a href="?sort=employee_id&dir=<?= $nextDir ?>">Employee ID ↕</a></th>
+        <th><a href="?sort=first_name&dir=<?= $nextDir ?>">First Name ↕</a></th>
+        <th><a href="?sort=last_name&dir=<?= $nextDir ?>">Last Name ↕</a></th>
+        <th><a href="?sort=email_id&dir=<?= $nextDir ?>">Email ↕</a></th>
+        <th><a href="?sort=address&dir=<?= $nextDir ?>">Address ↕</a></th>
+        <th><a href="?sort=phone_number&dir=<?= $nextDir ?>">Phone Number ↕</a></th>
+        < th>Delete</th>
+    </tr>
+
+    
+    <?php foreach ($employees as $employee): ?>
+        <tr>
+
+            <td><?= $block->escapeHtml($employee->getEmployeeId()) ?></td>
+
+            <td><?= $block->escapeHtml($employee->getFirstName()) ?></td>
+
+            <td><?= $block->escapeHtml($employee->getLastName()) ?></td>
+
+            <td><?= $block->escapeHtml($employee->getEmailId()) ?></td>
+
+            <td><?= $block->escapeHtml($employee->getAddress()) ?></td>
+
+            <td><?= $block->escapeHtml($employee->getPhoneNumber()) ?></td>
+
+            <td>
+               <form method="post"
+                    action="<?= $block->getUrl('mod1/index/employeetest') ?>">
+
+                    <?= $block->getBlockHtml('formkey') ?>
+
+                    <input
+                        type="hidden"
+                        name="delete_id"
+                        value="<?= $employee->getId() ?>">
+
+                    <button type="submit">
+                        Delete
+                    </button>
+
+                </form>
+            </td>
+
+        </tr>
+
+    <?php endforeach; ?>
+
+</table>

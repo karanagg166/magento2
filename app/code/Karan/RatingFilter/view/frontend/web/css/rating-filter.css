@@ -1,0 +1,22 @@
+/* Star icons of the layered navigation rating filter (Karan_RatingFilter) */
+.filter-options-content .rating-filter-stars {
+    display: inline-block;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.filter-options-content .rating-filter-stars-on {
+    color: #ff5501;
+}
+
+.filter-options-content .rating-filter-stars-off {
+    color: #c7c7c7;
+}
+
+.filter-options-content .rating-filter-label {
+    margin-left: 6px;
+    vertical-align: middle;
+}

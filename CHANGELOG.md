@@ -1127,7 +1127,7 @@
     * [magento/magento2#23292](https://github.com/magento/magento2/pull/23292) -- revert Properly transliterate German Umlauts (by @Nazar65)
     * [magento/magento2#23307](https://github.com/magento/magento2/pull/23307) -- [Ui] Allow to define listing configuration via ui component xml (by @Den4ik)
     * [magento/magento2#23335](https://github.com/magento/magento2/pull/23335) -- Correct spelling (by @ravi-chandra3197)
-    * [magento/magento2#22675](https://github.com/magento/magento2/pull/22675) -- Fixed #20038 loading icon disappearing before background process completes for Braintree payment in Admin (by @kunal-rtpl)
+    * [magento/magento2#22675](https://github.com/magento/magento2/pull/22675) -- Fixed #20038 loading icon disappearing before background process completes for Braintree payment in Admin (by @karan-rtpl)
     * [magento/magento2#23174](https://github.com/magento/magento2/pull/23174) -- Move Quote related Plugins to correct module (by @sankalpshekhar)
     * [magento/magento2#23309](https://github.com/magento/magento2/pull/23309) -- magento/magento2#23074: update correct product URL rewrites after changing category url key (by @sta1r)
     * [magento/magento2#23347](https://github.com/magento/magento2/pull/23347) -- Fixes incorrect file reference in a comment in a .htaccess file. (by @hostep)

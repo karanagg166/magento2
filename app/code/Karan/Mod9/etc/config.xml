@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mod9_general>
+            <general>
+                <enable>0</enable>
+                <text_to_display/>
+            </general>
+        </mod9_general>
+        <mod9_mod16>
+            <mod16>
+                <color>#ffffff</color>
+            </mod16>
+        </mod9_mod16>
+    </default>
+</config>

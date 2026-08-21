@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="karan_extensions" translate="label" sortOrder="200">
+            <label>Karan Extensions</label>
+        </tab>
+        <section id="magic360_custom" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Magic 360 Custom Settings</label>
+            <tab>karan_extensions</tab>
+            <resource>Karan_Magic360Custom::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>3D Product Viewer Configuration</label>
+                <field id="product_3d_image" translate="label comment" type="image" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>3D Animation Product Image</label>
+                    <comment>Upload or manage the 3D product view image for PDP animation.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media_path" scope_info="1">magic360</upload_dir>
+                    <base_url type="media" scope_info="1">magic360</base_url>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

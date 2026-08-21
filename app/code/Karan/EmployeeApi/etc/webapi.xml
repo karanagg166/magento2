@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <!-- GET /V1/employees (Fetch all employees or with SearchCriteria filtering) -->
+    <route url="/V1/employees" method="GET">
+        <service class="Karan\EmployeeApi\Api\EmployeeRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <!-- GET /V1/employees/:entityId (Fetch employee by ID) -->
+    <route url="/V1/employees/:entityId" method="GET">
+        <service class="Karan\EmployeeApi\Api\EmployeeRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <!-- POST /V1/employees (Create new employee) -->
+    <route url="/V1/employees" method="POST">
+        <service class="Karan\EmployeeApi\Api\EmployeeRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <!-- PUT /V1/employees/:entityId (Update existing employee) -->
+    <route url="/V1/employees/:entityId" method="PUT">
+        <service class="Karan\EmployeeApi\Api\EmployeeRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

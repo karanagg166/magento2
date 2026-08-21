@@ -1,0 +1,64 @@
+<?php
+/**
+ * Copyright © Karan. All rights reserved.
+ * @var \Karan\Popup\Block\Popup $block
+ */
+$popups = $block->getActivePopups();
+?>
+<?php if ($popups->getSize() > 0): ?>
+    <style>
+        .modal-popup.karan-custom-storefront-modal {
+            z-index: 999999 !important;
+        }
+        .modal-popup.karan-custom-storefront-modal .modal-inner-wrap {
+            background-color: #ffffff !important;
+            border-radius: 8px !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+            border: 2px solid #006699 !important;
+        }
+        .modal-popup.karan-custom-storefront-modal .modal-header .modal-title {
+            color: #006699 !important;
+            font-size: 22px !important;
+            font-weight: bold !important;
+        }
+    </style>
+    <?php foreach ($popups as $popup): ?>
+        <div id="karan-popup-modal-<?= (int)$popup->getId() ?>"
+             style="display:none;"
+             class="karan-popup-modal-container">
+            <div class="karan-popup-content-body"
+                 style="padding: 20px; font-size: 16px; line-height: 1.6; color: #222222; background-color: #ffffff;">
+                <?= /* @noEscape */ $popup->getContent() ?>
+            </div>
+        </div>
+        <script>
+            require([
+                'jquery',
+                'Magento_Ui/js/modal/modal'
+            ], function ($) {
+                'use strict';
+                $(document).ready(function () {
+                    var popupElement = $('#karan-popup-modal-<?= (int)$popup->getId() ?>');
+                    if (popupElement.length) {
+                        popupElement.modal({
+                            type: 'popup',
+                            responsive: true,
+                            innerScroll: true,
+                            title: <?= /* @noEscape */ json_encode($popup->getTitle()) ?>,
+                            modalClass: 'karan-custom-storefront-modal',
+                            buttons: [{
+                                text: <?= /* @noEscape */ json_encode(__('Close')) ?>,
+                                class: 'action primary modal-close-btn',
+                                click: function () {
+                                    this.closeModal();
+                                }
+                            }]
+                        });
+                        popupElement.show();
+                        popupElement.modal('openModal');
+                    }
+                });
+            });
+        </script>
+    <?php endforeach; ?>
+<?php endif; ?>

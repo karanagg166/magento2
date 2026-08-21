@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Karan_Magic360Custom::css/magic360-custom.css"/>
+    </head>
+    <body>
+        <referenceContainer name="product.info.media">
+            <block class="Karan\Magic360Custom\Block\Product360Viewer"
+                   name="karan.magic360.viewer"
+                   template="Karan_Magic360Custom::magic360_viewer.phtml"
+                   after="-"/>
+        </referenceContainer>
+    </body>
+</page>

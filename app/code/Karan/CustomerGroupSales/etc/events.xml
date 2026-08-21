@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_place_after">
+        <observer name="karan_customergroupsales_order_place_after"
+                  instance="Karan\CustomerGroupSales\Observer\OrderPlaceAfterObserver" />
+    </event>
+    <event name="custom_order_placement">
+        <observer name="karan_customergroupsales_record_group_sales"
+                  instance="Karan\CustomerGroupSales\Observer\RecordGroupSalesObserver" />
+    </event>
+</config>

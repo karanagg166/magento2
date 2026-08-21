@@ -1,0 +1,36 @@
+<!-- ko if: hasCrosssellProducts() -->
+<div class="block minicart-crosssell" style="margin-top: 15px; border-top: 1px solid #cccccc; padding-top: 10px;">
+    <div class="block-title" style="font-weight: bold; margin-bottom: 10px;">
+        <span translate="'You May Also Like:'"></span>
+    </div>
+    <div class="block-content">
+        <div class="minicart-crosssell-items" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <!-- ko foreach: getCrosssellProducts() -->
+            <div class="minicart-crosssell-item"
+                style="border: 1px solid #e5e5e5; border-radius: 4px; padding: 8px; flex: 1; min-width: 120px; text-align: center; background: #fafafa;">
+                <a data-bind="attr: {href: url, title: name}" class="product-item-photo">
+                    <img data-bind="attr: {src: image, alt: name}"
+                        style="max-width: 70px; height: auto; display: block; margin: 0 auto 5px;" />
+                </a>
+                <div class="product-item-details">
+                    <strong class="product-item-name" style="font-size: 12px; display: block; margin-bottom: 4px;">
+                        <a data-bind="attr: {href: url}, text: name" style="color: #333; text-decoration: none;"></a>
+                    </strong>
+                    <div class="price-box"
+                        style="font-size: 13px; font-weight: bold; color: #006699; margin-bottom: 6px;"
+                        data-bind="html: price"></div>
+                    <div class="actions">
+                        <form data-role="tocart-form" data-bind="attr: {action: add_to_cart_url}" method="post">
+                            <button type="submit" title="Add to Cart" class="action tocart primary"
+                                style="padding: 4px 8px; font-size: 11px; width: 100%;">
+                                <span translate="'Add to Cart'"></span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+</div>
+<!-- /ko -->

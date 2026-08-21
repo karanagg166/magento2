@@ -15,14 +15,18 @@
             "phpro/grumphp": true
         },
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform-check": false
     },
     "version": "2.4.9",
     "require": {
-        "magento/product-community-edition": "2.4.9",
+        "akeneo/module-magento2-connector-community": "^105",
+        "magento/composer": "^1.10.1-beta1",
         "magento/composer-dependency-version-audit-plugin": "~0.1",
         "magento/composer-root-update-plugin": "^2.0.4",
-        "magento/composer": "^1.10.1-beta1"
+        "magento/product-community-edition": "2.4.9",
+        "smartystreets/phpsdk": "^8.2",
+        "stripe/stripe-php": "^7.0"
     },
     "autoload": {
         "exclude-from-classmap": [

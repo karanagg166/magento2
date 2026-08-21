@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <!-- GET /V1/announcements (Fetch all announcements) -->
+    <route url="/V1/announcements" method="GET">
+        <service class="Karan\AnnouncementApi\Api\AnnouncementRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <!-- GET /V1/announcements/:entityId (Fetch announcement by ID) -->
+    <route url="/V1/announcements/:entityId" method="GET">
+        <service class="Karan\AnnouncementApi\Api\AnnouncementRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <!-- POST /V1/announcements (Post new announcement from mobile app) -->
+    <route url="/V1/announcements" method="POST">
+        <service class="Karan\AnnouncementApi\Api\AnnouncementRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

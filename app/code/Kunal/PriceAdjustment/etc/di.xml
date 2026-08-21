@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\Catalog\Model\Product">
-        <plugin name="kunal_price_adjustment_product" type="Kunal\PriceAdjustment\Plugin\ProductPricePlugin" sortOrder="999"/>
-    </type>
-    <type name="Magento\Framework\Pricing\Price\PriceInterface">
-        <plugin name="kunal_price_adjustment_price_interface" type="Kunal\PriceAdjustment\Plugin\PriceInterfacePlugin" sortOrder="10"/>
-    </type>
-</config>

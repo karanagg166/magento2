@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Karan\EmployeeApi\Api\EmployeeRepositoryInterface" type="Karan\EmployeeApi\Model\EmployeeRepository"/>
+    <preference for="Karan\EmployeeApi\Api\Data\EmployeeInterface" type="Karan\EmployeeApi\Model\Employee"/>
+    <preference for="Karan\EmployeeApi\Api\Data\EmployeeSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+</config>

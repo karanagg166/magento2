@@ -1,0 +1,17 @@
+<?php
+/**
+ * Copyright © Karan. All rights reserved.
+ * @var \Karan\CallForAvailability\Block\CallForAvailability $block
+ */
+?>
+<?php if ($block->isCallForAvailabilityRequired()): ?>
+    <div class="actions call-for-availability-actions" style="margin-top: 15px; margin-bottom: 15px;">
+        <a href="<?= $escaper->escapeUrl($block->getContactUrl()) ?>"
+           title="<?= $escaper->escapeHtmlAttr(__('Call For Availability')) ?>"
+           class="action primary button call-for-availability-btn"
+           style="display: inline-block; background-color: #e45300; border: 1px solid #e45300;
+                  color: #ffffff; padding: 10px 20px; font-weight: bold; text-decoration: none;">
+            <span><?= $escaper->escapeHtml(__('Call For Availability')) ?></span>
+        </a>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="karan_customer_group_sales" resource="default" engine="innodb" comment="Karan Customer Group Sales Tracking">
+        <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="int" name="customer_group_id" unsigned="true" nullable="false" comment="Customer Group ID"/>
+        <column xsi:type="decimal" name="total_sales" scale="4" precision="15" unsigned="false" nullable="false" default="0.0000" comment="Total Sales Amount"/>
+        <column xsi:type="int" name="order_count" unsigned="true" nullable="false" default="0" comment="Order Count"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="UNQ_KARAN_CUSTOMER_GROUP_SALES_GROUP_ID">
+            <column name="customer_group_id"/>
+        </constraint>
+    </table>
+</schema>

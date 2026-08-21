@@ -1,0 +1,50 @@
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<li id="contact" data-bind="fadeVisible: isVisible">
+    <div class="step-title" data-bind="text: stepTitle" data-role="title"></div>
+    <div id="checkout-step-contact"
+         class="step-content"
+         data-role="content">
+        <form id="contact-step-form" class="form contact-step-form" data-bind="submit: navigateToNextStep">
+            <fieldset class="fieldset">
+                <legend class="legend">
+                    <span translate="'Contact Information'"></span>
+                </legend>
+                <br>
+                <div class="field required">
+                    <label class="label" for="contact-email">
+                        <span translate="'Preferred Contact Email'"></span>
+                    </label>
+                    <div class="control">
+                        <input type="email"
+                               name="contact-email"
+                               id="contact-email"
+                               class="input-text"
+                               data-validate="{required:true, 'validate-email':true}">
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label" for="contact-phone">
+                        <span translate="'Contact Phone Number'"></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               name="contact-phone"
+                               id="contact-phone"
+                               class="input-text">
+                    </div>
+                </div>
+            </fieldset>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" class="action primary button continue">
+                        <span translate="'Next'"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</li>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="karan_popup" resource="default" engine="innodb" comment="Storefront Popups Table">
+        <column xsi:type="int" name="popup_id" unsigned="true" nullable="false" identity="true" comment="Popup ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Popup Title"/>
+        <column xsi:type="text" name="content" nullable="false" comment="Popup Content"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Update Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="popup_id"/>
+        </constraint>
+    </table>
+    
+</schema>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <customer_group_sales>
+            <general>
+                <enable>1</enable>
+                <designated_customer_groups>1,2,3</designated_customer_groups>
+            </general>
+        </customer_group_sales>
+    </default>
+</config>

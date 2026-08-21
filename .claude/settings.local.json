@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer show *)",
+      "Bash(awk '{print $1}')",
+      "Read(//var/log/apache2/**)",
+      "Read(//var/log/nginx/**)",
+      "Read(*)",
+      "Bash(php -r 'require \"/var/www/html/magento2/vendor/autoload.php\"; echo \\\\Monolog\\\\Logger::API, PHP_EOL;')",
+      "Bash(php -r ' *)",
+      "Bash(sudo -n crontab -l -u root)",
+      "Bash(crontab -l)",
+      "Bash(lsattr *)",
+      "Bash(php *)",
+      "Bash(curl -s -o /tmp/claude-1001/-var-www-html-magento2/4f4f40dc-03e4-4ece-a075-769dc3b763ba/scratchpad/page.html -w \"HTTP %{http_code}\\\\n\" -H \"Host: karan.magento.com\" http://127.0.0.1/)",
+      "Bash(*)",
+      "Write(*)",
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(*)"
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="karan_tab" translate="label" sortOrder="200">
+            <label>Karan Modules</label>
+        </tab>
+        <section id="customer_group_sales" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Customer Group Sales Configuration</label>
+            <tab>karan_tab</tab>
+            <resource>Karan_CustomerGroupSales::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Tracking</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="designated_customer_groups" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Designated Customer Groups</label>
+                    <comment>Select customer groups that trigger custom_order_placement event and track total sales.</comment>
+                    <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

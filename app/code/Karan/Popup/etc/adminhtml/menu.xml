@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Karan_Popup::popup_menu"
+             title="Storefront Popups"
+             module="Karan_Popup"
+             sortOrder="50"
+             parent="Magento_Backend::content"
+             action="karan_popup/index/index"
+             resource="Karan_Popup::popup"/>
+    </menu>
+</config>

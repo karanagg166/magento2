@@ -1,0 +1,564 @@
+<?php
+/** @var \Karan\ProductPayment\Block\ProductPayButton $block */
+if (!$block->isEnabled() || !$block->getProductId()) return;
+
+$prefill         = $block->getPrefillAddressJson();
+$publishableKey  = $block->escapeHtmlAttr($block->getPublishableKey());
+$createIntentUrl = $block->escapeUrl($block->getCreateIntentUrl());
+$productId       = (int) $block->getProductId();
+$productName     = $block->escapeHtml($block->getProductName());
+?>
+
+<!-- ============================================================
+     Pay Now with Stripe — Button + Modal
+     Module: Karan_ProductPayment
+     ============================================================ -->
+
+<style>
+/* ── Button ── */
+#karan-pay-now-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #635bff 0%, #4f46e5 100%);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: 0.3px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    box-shadow: 0 4px 14px rgba(99, 91, 255, 0.38);
+}
+#karan-pay-now-btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(99,91,255,.46); }
+#karan-pay-now-btn:active { transform: translateY(0);    box-shadow: 0 3px 10px rgba(99,91,255,.32); }
+#karan-pay-now-btn svg { flex-shrink: 0; }
+
+/* ── Modal overlay ── */
+#karan-pay-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 20, 0.62);
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+#karan-pay-overlay.open { display: flex; }
+
+/* ── Modal box ── */
+#karan-pay-modal {
+    background: #fff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 92vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+    animation: kpSlideUp .28s cubic-bezier(.34,1.46,.64,1) both;
+}
+@keyframes kpSlideUp {
+    from { opacity:0; transform:translateY(40px) scale(.96); }
+    to   { opacity:1; transform:translateY(0)    scale(1);   }
+}
+
+/* ── Modal header ── */
+#karan-pay-modal .kp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 24px 0;
+}
+#karan-pay-modal .kp-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1a1a2e;
+    margin: 0;
+}
+.kp-close {
+    background: #f3f4f6;
+    border: none;
+    border-radius: 50%;
+    width: 34px; height: 34px;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 34px;
+    text-align: center;
+    color: #555;
+    transition: background .18s;
+    flex-shrink: 0;
+}
+.kp-close:hover { background: #e5e7eb; }
+
+/* ── Sections ── */
+.kp-section {
+    padding: 18px 24px 0;
+}
+.kp-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin: 0 0 12px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ── Form row ── */
+.kp-row { display: flex; gap: 12px; margin-bottom: 12px; }
+.kp-field { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.kp-field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.kp-field input, .kp-field select {
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #111;
+    background: #fff;
+    transition: border-color .18s, box-shadow .18s;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+.kp-field input:focus, .kp-field select:focus {
+    border-color: #635bff;
+    box-shadow: 0 0 0 3px rgba(99,91,255,.12);
+}
+
+/* ── Stripe element wrapper ── */
+#karan-stripe-element {
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px;
+    transition: border-color .18s, box-shadow .18s;
+    min-height: 48px;
+}
+#karan-stripe-element.StripeElement--focus {
+    border-color: #635bff;
+    box-shadow: 0 0 0 3px rgba(99,91,255,.12);
+}
+
+/* ── Order summary pill ── */
+.kp-summary-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.kp-summary-pill .kp-item-name { font-size: 14px; font-weight: 600; color: #1a1a2e; }
+.kp-summary-pill .kp-item-price { font-size: 16px; font-weight: 700; color: #635bff; }
+
+/* ── Pay button inside modal ── */
+#karan-pay-submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin: 20px 0 0;
+    padding: 15px;
+    background: linear-gradient(135deg, #635bff 0%, #4f46e5 100%);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .22s ease;
+    box-shadow: 0 4px 14px rgba(99,91,255,.4);
+}
+#karan-pay-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,91,255,.48); }
+#karan-pay-submit:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+/* ── Error / info messages ── */
+#karan-pay-error {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #dc2626;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.kp-stripe-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 14px 24px 20px;
+    font-size: 12px;
+    color: #9ca3af;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+</style>
+
+<!-- ── Trigger button ── -->
+<button id="karan-pay-now-btn" type="button" aria-label="<?= __('Pay now with Stripe') ?>">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="20" height="20" rx="4" fill="white" fill-opacity="0.2"/>
+        <path d="M6.5 7.5C6.5 6.12 7.62 5 9 5C10.38 5 11.5 6.12 11.5 7.5C11.5 8.88 10.38 10 9 10" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M4 15C4 12.79 6.24 11 9 11C11.76 11 14 12.79 14 15" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M13 8L16 8M16 8L14.5 6.5M16 8L14.5 9.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    ⚡ <?= __('Pay Now with Stripe') ?>
+</button>
+
+<!-- ── Modal ── -->
+<div id="karan-pay-overlay" role="dialog" aria-modal="true" aria-labelledby="karan-pay-modal-title">
+    <div id="karan-pay-modal">
+
+        <!-- Header -->
+        <div class="kp-header">
+            <h2 id="karan-pay-modal-title">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="vertical-align:middle;margin-right:6px">
+                    <rect width="22" height="22" rx="6" fill="#635bff"/>
+                    <path d="M7 11.5C7 9.57 8.57 8 10.5 8C12.43 8 14 9.57 14 11.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+                    <path d="M5 17C5 14.24 7.46 12 10.5 12C13.54 12 16 14.24 16 17" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <?= __('Checkout with Stripe') ?>
+            </h2>
+            <button class="kp-close" id="karan-pay-close" aria-label="<?= __('Close') ?>">×</button>
+        </div>
+
+        <!-- Order summary -->
+        <div class="kp-section" style="margin-top:18px;">
+            <p class="kp-section-title"><?= __('Order Summary') ?></p>
+            <div class="kp-summary-pill">
+                <span class="kp-item-name" id="kp-product-label"><?= $productName ?></span>
+                <span class="kp-item-price" id="kp-amount-label">—</span>
+            </div>
+        </div>
+
+        <!-- Shipping details -->
+        <div class="kp-section" style="margin-top:18px;">
+            <p class="kp-section-title"><?= __('Shipping Details') ?></p>
+
+            <div class="kp-row">
+                <div class="kp-field">
+                    <label for="kp-firstname"><?= __('First Name') ?> *</label>
+                    <input id="kp-firstname" type="text" placeholder="John" autocomplete="given-name" required/>
+                </div>
+                <div class="kp-field">
+                    <label for="kp-lastname"><?= __('Last Name') ?> *</label>
+                    <input id="kp-lastname" type="text" placeholder="Doe" autocomplete="family-name" required/>
+                </div>
+            </div>
+
+            <div class="kp-row">
+                <div class="kp-field">
+                    <label for="kp-email"><?= __('Email') ?> *</label>
+                    <input id="kp-email" type="email" placeholder="john@example.com" autocomplete="email" required/>
+                </div>
+                <div class="kp-field">
+                    <label for="kp-telephone"><?= __('Phone') ?></label>
+                    <input id="kp-telephone" type="tel" placeholder="+91 98765 43210" autocomplete="tel"/>
+                </div>
+            </div>
+
+            <div class="kp-row">
+                <div class="kp-field" style="flex:2">
+                    <label for="kp-street"><?= __('Street Address') ?> *</label>
+                    <input id="kp-street" type="text" placeholder="123 Main St" autocomplete="street-address" required/>
+                </div>
+            </div>
+
+            <div class="kp-row">
+                <div class="kp-field">
+                    <label for="kp-city"><?= __('City') ?> *</label>
+                    <input id="kp-city" type="text" placeholder="Mumbai" autocomplete="address-level2" required/>
+                </div>
+                <div class="kp-field">
+                    <label for="kp-region"><?= __('State / Region') ?></label>
+                    <input id="kp-region" type="text" placeholder="Maharashtra" autocomplete="address-level1"/>
+                </div>
+            </div>
+
+            <div class="kp-row">
+                <div class="kp-field">
+                    <label for="kp-postcode"><?= __('Postcode') ?> *</label>
+                    <input id="kp-postcode" type="text" placeholder="400001" autocomplete="postal-code" required/>
+                </div>
+                <div class="kp-field">
+                    <label for="kp-country"><?= __('Country') ?></label>
+                    <select id="kp-country" autocomplete="country">
+                        <option value="IN">India</option>
+                        <option value="US">United States</option>
+                        <option value="GB">United Kingdom</option>
+                        <option value="AU">Australia</option>
+                        <option value="CA">Canada</option>
+                        <option value="SG">Singapore</option>
+                        <option value="AE">UAE</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment -->
+        <div class="kp-section" style="margin-top:18px;">
+            <p class="kp-section-title"><?= __('Card Details') ?></p>
+            <div id="karan-stripe-element"></div>
+            <div id="karan-pay-error"></div>
+            <button id="karan-pay-submit" type="button" disabled>
+                <span id="kp-submit-text"><?= __('Loading…') ?></span>
+            </button>
+        </div>
+
+        <!-- Stripe badge -->
+        <div class="kp-stripe-badge">
+            <svg height="16" viewBox="0 0 60 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.135 5.28c0-1.6-1.3-2.28-3.09-2.28H8.2v8.6h1.88V8.3h1.76l2.3 3.3h2.2l-2.56-3.58c.84-.36 1.34-1.12 1.34-2.72zm-3.34 1.34h-1.7V4.7h1.7c.9 0 1.4.38 1.4 1s-.5.92-1.4.92zM5.2 3h-1.8v8.6H5.2V3zm22.16 3.52C27.36 4.84 26.1 4 24.18 4c-1.96 0-3.44 1.4-3.44 3.46 0 2.08 1.48 3.46 3.76 3.46 1.06 0 2.14-.36 2.9-1l-.9-1.2c-.52.38-1.16.62-1.88.62-1 0-1.74-.5-1.96-1.44h5.02c.02-.14.02-.3.02-.44-.04-.38-.08-.76-.24-1.14zM22.7 7.08c.18-.88.76-1.44 1.56-1.44.84 0 1.4.54 1.54 1.44H22.7zM35.86 5.92c-.62-.26-1.44-.42-2.12-.42-1.88 0-3.12.94-3.12 2.4 0 1.24.84 1.92 2.38 2.16l.58.08c.72.1 1.02.28 1.02.6 0 .42-.44.66-1.24.66-.82 0-1.74-.28-2.34-.72l-.78 1.32c.74.52 1.86.8 3.06.8 2 0 3.26-.94 3.26-2.44 0-1.3-.9-1.96-2.4-2.2l-.58-.08c-.6-.08-.96-.24-.96-.58 0-.38.38-.6 1.06-.6.74 0 1.52.24 2.08.56l.1-.14.78-1.18-.42-.18.64-.04zm7.26-1.92h-2.06l-2.78 3.34V3H36.4v8.6h1.88V7.96L41 11.6h2.22l-3.06-4 3.06-3.6h-.1zm5.16 0h-1.88v8.6h1.88V4zm4.74 5.98c-.46 0-.78-.36-.78-1.02V5.74h1.66V4h-1.66V1.84h-1.88V4h-1.16v1.74h1.16v3.42c0 1.56.84 2.58 2.46 2.58.58 0 1.2-.16 1.66-.46l-.5-1.56c-.26.14-.62.26-.96.26zM57.2 3.92c-.52 0-1 .14-1.38.44V4h-1.88v8.6l1.88-.02V8.3c.38.42.94.66 1.56.66 1.68 0 2.82-1.26 2.82-2.52 0-1.32-1.14-2.52-3-2.52zm-.26 3.78c-.74 0-1.28-.54-1.28-1.26s.54-1.26 1.28-1.26c.72 0 1.26.54 1.26 1.26s-.54 1.26-1.26 1.26z" fill="#9ca3af"/>
+            </svg>
+            <?= __('Secured by Stripe') ?>
+        </div>
+    </div>
+</div>
+
+<script>
+require(['jquery', 'domReady!'], function($) {
+    'use strict';
+
+    var PUBLISHABLE_KEY  = '<?= $publishableKey ?>';
+    var CREATE_INTENT_URL = '<?= $createIntentUrl ?>';
+    var PRODUCT_ID       = <?= $productId ?>;
+    var prefill          = <?= $prefill /* already JSON, already escaped */ ?>;
+
+    var stripeJs, cardElement, clientSecret, quoteId;
+
+    // ── Prefill form ──────────────────────────────────────────────────────
+    function prefillForm() {
+        if (prefill.firstname) $('#kp-firstname').val(prefill.firstname);
+        if (prefill.lastname)  $('#kp-lastname').val(prefill.lastname);
+        if (prefill.email)     $('#kp-email').val(prefill.email);
+        if (prefill.telephone) $('#kp-telephone').val(prefill.telephone);
+        if (prefill.street)    $('#kp-street').val(prefill.street);
+        if (prefill.city)      $('#kp-city').val(prefill.city);
+        if (prefill.region)    $('#kp-region').val(prefill.region);
+        if (prefill.postcode)  $('#kp-postcode').val(prefill.postcode);
+        if (prefill.country)   $('#kp-country').val(prefill.country);
+    }
+
+    // ── Load Stripe.js dynamically ────────────────────────────────────────
+    function loadStripeJs(callback) {
+        if (window.Stripe) { callback(); return; }
+        var s = document.createElement('script');
+        s.src = 'https://js.stripe.com/v3/';
+        s.onload = callback;
+        document.head.appendChild(s);
+    }
+
+    // ── Mount Stripe Card Element ─────────────────────────────────────────
+    function mountCardElement() {
+        stripeJs = window.Stripe(PUBLISHABLE_KEY);
+        var elements = stripeJs.elements();
+        cardElement = elements.create('card', {
+            style: {
+                base: {
+                    fontSize: '15px',
+                    color: '#111',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+                    '::placeholder': { color: '#9ca3af' }
+                },
+                invalid: { color: '#dc2626' }
+            }
+        });
+        cardElement.mount('#karan-stripe-element');
+        cardElement.on('change', function(e) {
+            showError(e.error ? e.error.message : '');
+        });
+        $('#karan-pay-submit').prop('disabled', false).find('#kp-submit-text').text('Pay Now');
+    }
+
+    // ── Open / Close modal ────────────────────────────────────────────────
+    $('#karan-pay-now-btn').on('click', function() {
+        prefillForm();
+        $('#karan-pay-overlay').addClass('open');
+        $('body').css('overflow', 'hidden');
+
+        if (!stripeJs) {
+            loadStripeJs(mountCardElement);
+        }
+    });
+
+    function closeModal() {
+        $('#karan-pay-overlay').removeClass('open');
+        $('body').css('overflow', '');
+    }
+
+    $('#karan-pay-close, #karan-pay-overlay').on('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+    $(document).on('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // ── Helpers ───────────────────────────────────────────────────────────
+    function showError(msg) {
+        var $err = $('#karan-pay-error');
+        if (msg) { $err.text(msg).show(); } else { $err.hide().text(''); }
+    }
+
+    function setLoading(loading) {
+        var $btn = $('#karan-pay-submit');
+        $btn.prop('disabled', loading);
+        $('#kp-submit-text').text(loading ? 'Processing…' : 'Pay Now');
+    }
+
+    function getQty() {
+        var v = parseInt($('#qty').val(), 10);
+        return isNaN(v) || v < 1 ? 1 : v;
+    }
+
+    // ── Step 1: Create PaymentIntent (server side) ────────────────────────
+    function createIntent(shippingData, callback) {
+        $.ajax({
+            url: CREATE_INTENT_URL,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                product_id: PRODUCT_ID,
+                qty: getQty(),
+                shipping: shippingData
+            }),
+            success: function(resp) {
+                if (resp.success) {
+                    callback(null, resp);
+                } else {
+                    callback(resp.error || 'Could not initialize payment.');
+                }
+            },
+            error: function(xhr) {
+                callback('Server error. Please try again.');
+            }
+        });
+    }
+
+    // ── Step 2: Confirm payment with Stripe.js ────────────────────────────
+    function confirmPayment(secret, billingDetails, callback) {
+        stripeJs.confirmCardPayment(secret, {
+            payment_method: {
+                card: cardElement,
+                billing_details: billingDetails
+            }
+        }).then(function(result) {
+            if (result.error) {
+                callback(result.error.message);
+            } else {
+                callback(null, result.paymentIntent);
+            }
+        });
+    }
+
+    // ── Step 3: Confirm order on server ──────────────────────────────────
+    function confirmOrder(intentId, qId, callback) {
+        $.ajax({
+            url: CREATE_INTENT_URL.replace('createIntent', 'confirm'),
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                payment_intent_id: intentId,
+                quote_id: qId
+            }),
+            success: function(resp) {
+                if (resp.success) {
+                    callback(null, resp);
+                } else {
+                    callback(resp.error || 'Order placement failed.');
+                }
+            },
+            error: function() {
+                callback('Server error while placing order.');
+            }
+        });
+    }
+
+    // ── Main submit handler ───────────────────────────────────────────────
+    $('#karan-pay-submit').on('click', function() {
+        showError('');
+
+        var shippingData = {
+            firstname : $('#kp-firstname').val().trim(),
+            lastname  : $('#kp-lastname').val().trim(),
+            email     : $('#kp-email').val().trim(),
+            telephone : $('#kp-telephone').val().trim(),
+            street    : $('#kp-street').val().trim(),
+            city      : $('#kp-city').val().trim(),
+            region    : $('#kp-region').val().trim(),
+            postcode  : $('#kp-postcode').val().trim(),
+            country   : $('#kp-country').val()
+        };
+
+        // Basic front-end validation
+        if (!shippingData.firstname || !shippingData.lastname || !shippingData.email
+            || !shippingData.street || !shippingData.city || !shippingData.postcode) {
+            showError('Please fill in all required shipping fields.');
+            return;
+        }
+
+        setLoading(true);
+
+        // ── Step 1 ──
+        createIntent(shippingData, function(err, data) {
+            if (err) { showError(err); setLoading(false); return; }
+
+            clientSecret = data.client_secret;
+            quoteId      = data.quote_id;
+
+            // Update summary price
+            if (data.currency && data.amount) {
+                $('#kp-amount-label').text(data.currency + ' ' + parseFloat(data.amount).toFixed(2));
+            }
+
+            var billingDetails = {
+                name  : shippingData.firstname + ' ' + shippingData.lastname,
+                email : shippingData.email,
+                phone : shippingData.telephone,
+                address: {
+                    line1       : shippingData.street,
+                    city        : shippingData.city,
+                    state       : shippingData.region,
+                    postal_code : shippingData.postcode,
+                    country     : shippingData.country
+                }
+            };
+
+            // ── Step 2 ──
+            confirmPayment(clientSecret, billingDetails, function(err2, intent) {
+                if (err2) { showError(err2); setLoading(false); return; }
+
+                // ── Step 3 ──
+                confirmOrder(intent.id, quoteId, function(err3, result) {
+                    setLoading(false);
+                    if (err3) { showError(err3); return; }
+
+                    closeModal();
+                    window.location.href = window.BASE_URL + result.redirect_url;
+                });
+            });
+        });
+    });
+});
+</script>

@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table name="employee_table"
+           resource="default"
+           engine="innodb"
+           comment="Employee Table">
+
+        <!-- Auto Increment Primary Key -->
+        <column xsi:type="int"
+                name="id"
+                identity="true"
+                nullable="false"
+                unsigned="true"
+                comment="ID"/>
+
+        <!-- Employee Code -->
+        <column xsi:type="varchar"
+                name="employee_id"
+                nullable="false"
+                length="20"
+                comment="Employee ID"/>
+
+        <!-- First Name -->
+        <column xsi:type="varchar"
+                name="first_name"
+                nullable="false"
+                length="30"
+                comment="First Name"/>
+
+        <!-- Last Name -->
+        <column xsi:type="varchar"
+                name="last_name"
+                nullable="false"
+                length="30"
+                comment="Last Name"/>
+
+        <!-- Email -->
+        <column xsi:type="varchar"
+                name="email_id"
+                nullable="false"
+                length="255"
+                comment="Email"/>
+
+        <!-- Address -->
+        <column xsi:type="varchar"
+                name="address"
+                nullable="false"
+                length="255"
+                comment="Address"/>
+
+        <!-- Phone -->
+        <column xsi:type="varchar"
+                name="phone_number"
+                nullable="false"
+                length="10"
+                comment="Phone Number"/>
+
+        <!-- Primary Key -->
+        <constraint xsi:type="primary"
+                    referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+
+        <!-- Unique Employee ID -->
+        <constraint xsi:type="unique"
+                    referenceId="EMPLOYEE_TABLE_EMPLOYEE_ID_UNIQUE">
+            <column name="employee_id"/>
+        </constraint>
+
+        <!-- Unique Email -->
+        <constraint xsi:type="unique"
+                    referenceId="EMPLOYEE_TABLE_EMAIL_UNIQUE">
+            <column name="email_id"/>
+        </constraint>
+
+    </table>
+
+    <!-- Accumulated sales per customer group, written by the custom_order_placement observer -->
+    <table name="karan_customer_group_sales"
+           resource="default"
+           engine="innodb"
+           comment="Customer Group Sales Totals">
+
+        <column xsi:type="int"
+                name="entity_id"
+                identity="true"
+                nullable="false"
+                unsigned="true"
+                comment="Entity ID"/>
+
+        <column xsi:type="int"
+                name="customer_group_id"
+                nullable="false"
+                unsigned="true"
+                comment="Customer Group ID"/>
+
+        <column xsi:type="varchar"
+                name="customer_group_code"
+                nullable="true"
+                length="64"
+                comment="Customer Group Code"/>
+
+        <column xsi:type="int"
+                name="order_count"
+                nullable="false"
+                unsigned="true"
+                default="0"
+                comment="Number Of Orders Accumulated"/>
+
+        <!-- Base currency so totals stay comparable across store views -->
+        <column xsi:type="decimal"
+                name="total_sales"
+                scale="4"
+                precision="20"
+                nullable="false"
+                default="0"
+                comment="Accumulated Base Grand Total"/>
+
+        <column xsi:type="varchar"
+                name="base_currency_code"
+                nullable="true"
+                length="3"
+                comment="Base Currency Code"/>
+
+        <column xsi:type="int"
+                name="last_order_id"
+                nullable="true"
+                unsigned="true"
+                comment="Last Order Entity ID"/>
+
+        <column xsi:type="varchar"
+                name="last_order_increment_id"
+                nullable="true"
+                length="50"
+                comment="Last Order Increment ID"/>
+
+        <column xsi:type="timestamp"
+                name="created_at"
+                on_update="false"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+
+        <column xsi:type="timestamp"
+                name="updated_at"
+                on_update="true"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+
+        <constraint xsi:type="primary"
+                    referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+
+        <!-- One aggregate row per group; the observer relies on this for its upsert -->
+        <constraint xsi:type="unique"
+                    referenceId="KARAN_CUSTOMER_GROUP_SALES_CUSTOMER_GROUP_ID_UNIQUE">
+            <column name="customer_group_id"/>
+        </constraint>
+
+    </table>
+
+</schema>

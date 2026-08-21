@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Karan\AnnouncementApi\Api\AnnouncementRepositoryInterface" type="Karan\AnnouncementApi\Model\AnnouncementRepository"/>
+    <preference for="Karan\AnnouncementApi\Api\Data\AnnouncementInterface" type="Karan\AnnouncementApi\Model\Announcement"/>
+    <preference for="Karan\AnnouncementApi\Api\Data\AnnouncementSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+</config>

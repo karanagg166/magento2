@@ -1,0 +1,29 @@
+.affiliate-pdp-banner {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: #ffffff;
+    padding: 16px 24px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-left: 6px solid #ff9900;
+}
+
+.affiliate-pdp-banner .affiliate-badge {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #111111;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 3px;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.affiliate-pdp-banner .affiliate-message {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #f0f4f8;
+}

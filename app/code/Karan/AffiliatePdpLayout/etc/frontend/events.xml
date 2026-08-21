@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Karan. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="layout_load_before">
+        <observer name="karan_affiliate_pdp_layout_handle" instance="Karan\AffiliatePdpLayout\Observer\AddAffiliateLayoutHandleObserver" />
+    </event>
+</config>

@@ -1,0 +1,13 @@
+<?php
+/**
+ * Copyright © Karan. All rights reserved.
+ * @var \Karan\StoreConfigLogger\Block\ConfigLogger $block
+ */
+?>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Karan_StoreConfigLogger/js/config-logger": <?= /* @noEscape */ json_encode($block->getConfigData()) ?>
+    }
+}
+</script>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    
+    <event name="catalog_controller_product_view">
+        <observer name="karan_log_product_name"
+                  instance="Karan\Mod1\Observer\ProductViewObserver"/>
+    </event>
+
+    <event name="controller_front_send_response_before">
+        <observer name="karan_log_html"
+                  instance="Karan\Mod1\Observer\HtmlObserver"/>
+    </event>
+        <event name="controller_action_predispatch">
+        <observer name="karan_log_routers"
+                  instance="Karan\Mod1\Observer\RouterObserver"/>
+    </event>
+     <event name="controller_action_noroute">
+        <observer name="contact_us_redirect"
+                  instance="Karan\Mod1\Observer\RedirectObserver"/>
+    </event>
+    
+    
+</config>
