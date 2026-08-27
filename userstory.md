@@ -64,11 +64,8 @@ User Story #19 :
 Setup Magento v2.4.6.
 Create a module that will display cross sell products in the minicart section based on the products added to cart.
 Show only first two products from any item added to cart.
-User Story #20 :
-Set up a magento v2.4.6 instance.
-Create a module that will display ‘Call For Availability’ button in place of ‘Add to Cart’ on PDP and PLP page based on the salable quantity.
-If the salable quantity is zero, button should display ‘Call For Availability’.
-Call for availability button should redirect the user to contact us page.
+
+
 User Story #21 :
 Present distinct product detail page (pdp) layouts based on whether customers arrive via the general product URL or an affiliated product URL.
 The affiliated URL format is ‘https://domain.com/{product identifier}?affiliate=true’.

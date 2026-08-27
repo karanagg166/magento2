@@ -11,4 +11,4 @@
     <type name="Magento\Catalog\Block\Product\View">
         <plugin name="karan_call_for_availability_view_product" type="Karan\CallForAvailability\Plugin\Catalog\Block\Product\ViewPlugin" sortOrder="10"/>
     </type>
-</config>
+</config>  

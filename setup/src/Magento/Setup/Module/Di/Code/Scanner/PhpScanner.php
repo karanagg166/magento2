@@ -27,7 +27,6 @@ class PhpScanner implements ScannerInterface
      * @var TypeProcessor
      */
     private $typeProcessor;
-
     /**
      * Initialize dependencies.
      *
@@ -164,7 +163,8 @@ class PhpScanner implements ScannerInterface
         }
 
         return $missingExtensionInterfaces;
-    }
+    }                                                                                                                                                               
+  
 
     /**
      * Get array of class names
