@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <fieldset name="category_permissions" sortOrder="90">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Category Permissions</label>
+        </settings>
+
+        <!-- WEBSITE -->
+        <field name="website_id" sortOrder="10" formElement="select">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Website</label>
+                <dataScope>website_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                
+                    <settings>
+                        <options class="Karan\CategoryPermissions\Model\Source\WebsiteOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <!-- CUSTOMER GROUP -->
+        <field name="customer_group_id" sortOrder="20" formElement="select">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Customer Group</label>
+                <dataScope>customer_group_id</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Karan\CategoryPermissions\Model\Source\CustomerGroupOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <!-- CAN BROWSE -->
+        <field name="can_browse" sortOrder="30" formElement="select">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Can Browse Category</label>
+                <dataScope>can_browse</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <!-- CAN VIEW PRICE -->
+        <field name="can_view_price" sortOrder="40" formElement="select">
+            <settings>
+                <dataType>number</dataType>
+                <label translate="true">Can View Price</label>
+                <dataScope>can_view_price</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+   
+
+<field name="can_add_to_cart" sortOrder="40" formElement="select">
+            <settings> 
+                <dataType>number</dataType>
+                <label translate="true">Can Add to Cart</label>
+                <dataScope>can_add_to_cart</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+
+
+    </fieldset>
+</form>
