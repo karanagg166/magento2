@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
 
@@ -8,88 +9,149 @@
             <label translate="true">Category Permissions</label>
         </settings>
 
-        <!-- WEBSITE -->
-        <field name="website_id" sortOrder="10" formElement="select">
+        <dynamicRows name="category_permissions_rows">
             <settings>
-                <dataType>number</dataType>
-                <label translate="true">Website</label>
-                <dataScope>website_id</dataScope>
+                <addButton>true</addButton>
+                <addButtonLabel translate="true">Add Permission</addButtonLabel>
+                <componentType>dynamicRows</componentType>
+                <deleteProperty>delete</deleteProperty>
+                <deleteValue>true</deleteValue>
             </settings>
-            <formElements>
-                <select>
+
+            <container name="record"
+                       component="Magento_Ui/js/dynamic-rows/record">
+     
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
                 
+                <!-- WEBSITE -->
+                <field name="website_id" formElement="select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+
                     <settings>
-                        <options class="Karan\CategoryPermissions\Model\Source\WebsiteOptions"/>
+                        <dataType>number</dataType>
+                        <label translate="true">Website</label>
+                        <dataScope>website_id</dataScope>
                     </settings>
-                </select>
-            </formElements>
-        </field>
 
-        <!-- CUSTOMER GROUP -->
-        <field name="customer_group_id" sortOrder="20" formElement="select">
-            <settings>
-                <dataType>number</dataType>
-                <label translate="true">Customer Group</label>
-                <dataScope>customer_group_id</dataScope>
-            </settings>
-            <formElements>
-                <select>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Karan\CategoryPermissions\Model\Source\WebsiteOptions"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+
+
+                <!-- CUSTOMER GROUP -->
+                <field name="customer_group_id" formElement="select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+
                     <settings>
-                        <options class="Karan\CategoryPermissions\Model\Source\CustomerGroupOptions"/>
+                        <dataType>number</dataType>
+                        <label translate="true">Customer Group</label>
+                        <dataScope>customer_group_id</dataScope>
                     </settings>
-                </select>
-            </formElements>
-        </field>
 
-        <!-- CAN BROWSE -->
-        <field name="can_browse" sortOrder="30" formElement="select">
-            <settings>
-                <dataType>number</dataType>
-                <label translate="true">Can Browse Category</label>
-                <dataScope>can_browse</dataScope>
-            </settings>
-            <formElements>
-                <select>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Karan\CategoryPermissions\Model\Source\CustomerGroupOptions"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+
+
+                <!-- BROWSE -->
+                <field name="can_browse" formElement="select">
                     <settings>
-                        <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                        <dataType>number</dataType>
+                        <label translate="true">Browse</label>
+                        <dataScope>can_browse</dataScope>
                     </settings>
-                </select>
-            </formElements>
-        </field>
 
-        <!-- CAN VIEW PRICE -->
-        <field name="can_view_price" sortOrder="40" formElement="select">
-            <settings>
-                <dataType>number</dataType>
-                <label translate="true">Can View Price</label>
-                <dataScope>can_view_price</dataScope>
-            </settings>
-            <formElements>
-                <select>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+
+
+                <!-- PRICE -->
+                <field name="can_view_price" formElement="select">
                     <settings>
-                        <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                        <dataType>number</dataType>
+                        <label translate="true">View Price</label>
+                        <dataScope>can_view_price</dataScope>
                     </settings>
-                </select>
-            </formElements>
-        </field>
-   
 
-<field name="can_add_to_cart" sortOrder="40" formElement="select">
-            <settings> 
-                <dataType>number</dataType>
-                <label translate="true">Can Add to Cart</label>
-                <dataScope>can_add_to_cart</dataScope>
-            </settings>
-            <formElements>
-                <select>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+
+
+                <!-- CART -->
+                <field name="can_add_to_cart" formElement="select">
                     <settings>
-                        <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                        <dataType>number</dataType>
+                        <label translate="true">Add To Cart</label>
+                        <dataScope>can_add_to_cart</dataScope>
                     </settings>
-                </select>
-            </formElements>
-        </field>
+
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="Karan\CategoryPermissions\Model\Source\YesNoOptions"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
 
 
+                <!-- DELETE ACTION -->
+                <actionDelete template="Magento_Backend/dynamic-rows/cells/action-delete">
+
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+
+                    <settings>
+                        <dataType>text</dataType>
+                        <label translate="true">Actions</label>
+                        <componentType>actionDelete</componentType>
+                    </settings>
+
+                </actionDelete>
+
+            </container>
+
+        </dynamicRows>
 
     </fieldset>
+
 </form>

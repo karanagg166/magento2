@@ -29,7 +29,6 @@ class Data extends AbstractHelper
         parent::__construct($context);
         $this->stockRegistry = $stockRegistry;
     }
-
     /**
      * Check if product salable quantity is 0 or out of stock
      *
@@ -37,7 +36,7 @@ class Data extends AbstractHelper
      * @return bool
      */
     public function isCallForAvailabilityRequired(Product $product): bool
-    {
+     {
         try {
             $sku = $product->getSku();
             if ($sku && interface_exists(\Magento\InventorySalesApi\Api\GetProductSalableQtyInterface::class)) {
@@ -59,9 +58,21 @@ class Data extends AbstractHelper
 
         try {
             $stockItem = $this->stockRegistry->getStockItem($product->getId());
-            if (!$stockItem->getIsInStock() || (float)$stockItem->getQty() <= 0) {
-                return true;
-            }
+
+
+$stockQty = (float)$stockItem->getQty();
+
+/**
+ * INTENTIONAL BUG FOR XDEBUG PRACTICE
+ */
+$stockQty = 0;
+
+if (!$stockItem->getIsInStock() || $stockQty <= 0) {
+    return true;
+}
+            // if (!$stockItem->getIsInStock() || (float)$stockItem->getQty() <= 0) {
+            //     return true;
+            // }
         } catch (\Exception $exception) {
             $this->_logger->debug($exception->getMessage());
         }

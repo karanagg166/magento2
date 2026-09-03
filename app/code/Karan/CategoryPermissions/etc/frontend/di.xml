@@ -1,3 +1,37 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Catalog\Controller\Category\View">
+        <plugin
+            name="karan_category_permissions_category_access"
+            type="Karan\CategoryPermissions\Plugin\Category\CategoryAccessPlugin"
+            sortOrder="10"
+        />
+    </type>
+
+    <type name="Magento\Catalog\Controller\Product\View">
+        <plugin
+            name="karan_category_permissions_product_access"
+            type="Karan\CategoryPermissions\Plugin\Product\ProductAccessPlugin"
+            sortOrder="10"
+        />
+    </type>
+<type name="Magento\Checkout\Model\Cart">
+    <plugin
+        name="karan_category_permissions_add_to_cart"
+        type="Karan\CategoryPermissions\Plugin\Cart\AddToCartPlugin"
+        sortOrder="10"
+    />
+</type>
+
+
+<type name="Magento\Framework\Pricing\Render">
+    <plugin
+        name="karan_category_permissions_price_render"
+        type="Karan\CategoryPermissions\Plugin\Price\PriceRenderPlugin"
+        sortOrder="10"
+    />
+</type>
 </config>

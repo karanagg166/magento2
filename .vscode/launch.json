@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "/var/www/html": "${workspaceFolder}"
+            },
+            "hostname": "0.0.0.0"
+        },
+        {
+            "name": "Listen for Xdebug (Stop on Entry)",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "stopOnEntry": true,
+            "pathMappings": {
+                "/var/www/html": "${workspaceFolder}"
+            },
+            "hostname": "0.0.0.0"
+        }
+    ]
+}
