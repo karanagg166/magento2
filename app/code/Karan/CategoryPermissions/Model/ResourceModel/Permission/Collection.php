@@ -17,4 +17,6 @@ class Collection extends AbstractCollection
             PermissionResource::class
         );
     }
+    
+
 }

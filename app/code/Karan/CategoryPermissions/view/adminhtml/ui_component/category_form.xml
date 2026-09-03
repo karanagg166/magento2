@@ -28,8 +28,7 @@
                         <item name="componentType" xsi:type="string">container</item>
                     </item>
                 </argument>
-                
-                <!-- WEBSITE -->
+                  <!-- WEBSITE -->
                 <field name="website_id" formElement="select">
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">

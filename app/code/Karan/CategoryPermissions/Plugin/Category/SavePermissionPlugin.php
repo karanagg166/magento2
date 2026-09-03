@@ -9,6 +9,7 @@ use Magento\Framework\Registry;
 use Karan\CategoryPermissions\Api\PermissionManagementInterface;
 use Psr\Log\LoggerInterface;
 
+
 class SavePermissionPlugin
 {
     private RequestInterface $request;
@@ -62,7 +63,8 @@ class SavePermissionPlugin
                 $this->logger->error('Error saving category permissions: ' . $e->getMessage(), ['exception' => $e]);
             }
         }
-
+        
+                 
         return $result;
     }
 }

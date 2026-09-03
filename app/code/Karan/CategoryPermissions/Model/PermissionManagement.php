@@ -9,6 +9,7 @@ use Karan\CategoryPermissions\Model\ResourceModel\Permission as PermissionResour
 use Karan\CategoryPermissions\Model\ResourceModel\Permission\CollectionFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Customer\Model\Session as CustomerSession;
+use Magento\Catalog\Api\CategoryRepositoryInterface;
 
 class PermissionManagement implements PermissionManagementInterface
 {
@@ -17,19 +18,22 @@ class PermissionManagement implements PermissionManagementInterface
     private CollectionFactory $collectionFactory;
     private StoreManagerInterface $storeManager;
     private CustomerSession $customerSession;
+    private CategoryRepositoryInterface $categoryRepository;
 
     public function __construct(
         PermissionFactory $permissionFactory,
         PermissionResource $permissionResource,
         CollectionFactory $collectionFactory,
         StoreManagerInterface $storeManager,
-        CustomerSession $customerSession
+        CustomerSession $customerSession,
+        CategoryRepositoryInterface $categoryRepository
     ) {
         $this->permissionFactory = $permissionFactory;
         $this->permissionResource = $permissionResource;
         $this->collectionFactory = $collectionFactory;
         $this->storeManager = $storeManager;
         $this->customerSession = $customerSession;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -170,6 +174,7 @@ public function canAddToCart(int $categoryId): bool
         /*
          * No rule means normal Magento behavior
          */
+        
         if (!$permission->getId()) {
             return null;
         }
